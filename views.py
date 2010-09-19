@@ -26,7 +26,7 @@ def upload(request):
         if etmp: etmp = Decimal(etmp)
         vid = 0 # Where could I get this?
     except Exception, inst:
-        errlog = file('upload_errors.log', 'a')
+        errlog = file('/home/www-data/djapps/torque/upload_errors.log', 'a')
         errlog.write('Sample error:\n\t%s\n\t%s\n\n' % (inst, repr(request.GET)))
         errlog.close()
     else:
@@ -35,6 +35,7 @@ def upload(request):
                               longitude=lon,
                               mpg=mpg,
                               throttle=throttle,
+                              speed=speed,
                               rpm=rpm,
                               engine_temp=etmp,
                               vehicle_id=vid)
