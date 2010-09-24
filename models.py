@@ -1,7 +1,7 @@
 from django.db import models
 
 class Sample(models.Model):
-    time = models.DateTimeField(editable=False,
+    time = models.DateTimeField(primary_key=True, editable=False,
                                 help_text='Timestamp for the sample')
     latitude = models.DecimalField(max_digits=16, decimal_places=13, null=True, blank=True, editable=False,
                                    help_text='Location, latidute of sample')
@@ -19,7 +19,7 @@ class Sample(models.Model):
                                              help_text='Vehicle speed (KPH)')
     engine_temp = models.PositiveSmallIntegerField(editable=False, verbose_name='engine coolent temperature',
                                                    help_text='Engine coolent temperature (C)')
-    vehicle_id = models.IntegerField(null=True, blank=True,
+    vehicle_id = models.IntegerField(null=True, blank=True, editable=False,
                                      help_text='Vehigle identifier for this record.')
 
     
