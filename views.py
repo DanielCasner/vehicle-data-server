@@ -2,13 +2,15 @@ from django.shortcuts import render_to_response
 from django.http import HttpResponse, Http404, HttpResponseRedirect
 from django import forms
 from django.db.models import Avg, Max
-from djapps.torque.models import *
+from pydc.torque.models import *
 from datetime import *
 from decimal import Decimal
 
 def home(request):
-    return render_to_response('danielcasner/base.html', {'title': 'Torque', 'string_content':'Nothing to see here yet'})
-    return HttpResponse('Nothing to see here yet.')
+    try:
+        return render_to_response('danielcasner/base.html', {'title': 'Torque', 'string_content':'Nothing to see here yet'})
+    finally:
+        return HttpResponse('Nothing to see here yet.')
 
 
 def car_data(request):
@@ -72,7 +74,7 @@ def upload(request):
         if etmp: etmp = Decimal(etmp)
         vid = 0 # Where could I get this?
     except Exception, inst:
-        errlog = file('/home/www-data/djapps/torque/upload_errors.log', 'a')
+        errlog = file('torque_upload_errors.log', 'a')
         errlog.write('Sample error:\n\t%s\n\t%s\n\n' % (inst, repr(request.GET)))
         errlog.close()
     else:
@@ -87,7 +89,7 @@ def upload(request):
                                   engine_temp=etmp,
                                   vehicle_id=vid)
         except Exception, inst:
-            errlog = file('/home/www-data/djapps/torque/insert_errors.log', 'a')
+            errlog = file('torque_insert_errors.log', 'a')
             errlog.write(str(inst) + '\n\n')
             errlog.close()
     return HttpResponse('OK!')
